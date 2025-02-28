@@ -12,7 +12,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
         "article" in item && "quantité" in item && "prix" in item
     )
   );
-
+//Essai de commentaire
   useEffect(() => {
     const newArticles = devis.filter(
       (item): item is Article =>
