@@ -1,8 +1,8 @@
-import { DevisResponse } from "../types/devis";
+import { Donnée } from "../types/devis";
 
 export const generateurDevis = async (
   demande: string
-): Promise<DevisResponse> => {
+): Promise<Donnée[]> => {
   try {
     const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyA6qewv7bqHb9F0bsX1KBcTByFaCDSqM-c",
