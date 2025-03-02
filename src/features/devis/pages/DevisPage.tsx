@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { generateurDevis } from "../../../api/devisApi";
 import { Donnée } from "../../../interface/devis";
 import { DevisForm } from "../components/DevisForm";
 import { DevisResult } from "../components/DevisResult";
-import { mockDevisResponse } from "../../../mocks/devisResponse";
 
 export const DevisPage = () => {
   const [devis, setDevis] = useState<Donnée[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    setDevis(mockDevisResponse);
-  }, []);
+  // useEffect(() => {
+  //   setDevis(mockDevisResponse);
+  // }, []);
+
+  // useEffect(() => {
+  //   setDevis(mockDevisResponseError);
+  // }, []);
 
   const handleSubmit = async (demande: string) => {
     setIsLoading(true);
@@ -25,19 +28,27 @@ export const DevisPage = () => {
     }
   };
 
+  const hasError = devis?.some((item) => "erreur" in item);
+  console.log(hasError);
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-10 px-4 w-full">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-10 md:px-4  w-full">
       <h1 className="text-3xl font-bold text-gray-800 mb-6">
         Générateur de Devis IA
       </h1>
-      {devis ? (
+      {devis && !hasError ? (
         <div className="mt-6 w-full">
           <DevisResult devis={devis} />
         </div>
       ) : (
-        <div className="bg-white shadow-lg rounded-lg p-6 w-full">
+        <>
           <DevisForm onSubmit={handleSubmit} isLoading={isLoading} />
-        </div>
+          {devis && hasError && (
+            <div className="mt-4 bg-red-200 p-4 rounded-lg">
+              {devis.find((item) => "erreur" in item)?.erreur}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

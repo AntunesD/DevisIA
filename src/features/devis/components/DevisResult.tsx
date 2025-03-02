@@ -14,6 +14,11 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
         "article" in item && "quantité" in item && "prix" in item
     )
   );
+  const [tva, setTva] = useState<number>(10);
+
+  const calculateTTC = (ht: number, tva: number) => {
+    return (ht * (1 + tva / 100)).toFixed(2);
+  };
 
   const [entrepriseDetails, setEntrepriseDetails] = useState({
     nom: "",
@@ -63,28 +68,30 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
   };
 
   return (
-    <div className=" mx-auto p-6 flex flex-col items-center ">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Votre Devis</h2>
+    <div className="mx-auto p-6 flex flex-col items-center">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">
+        Voici le devis que vous pouvez ajuster
+      </h2>
       <DetailsForm
         onEntrepriseUpdate={(details) =>
           handleDetailsUpdate("entreprise", details)
         }
         onClientUpdate={(details) => handleDetailsUpdate("client", details)}
       />
-      <div className=" rounded-lg p-4 bg-white shadow-lg">
-        <table className="w-[1000px] table-auto">
-          <thead className="bg-gray-50 ">
+      <div className="w-full overflow-x-auto rounded-lg p-4 bg-white shadow-lg">
+        <table className="min-w-full table-auto">
+          <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left  text-xs font-medium  text-gray-500 uppercase w-[85%]">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase md:w-[60%] w-[40%]">
                 Article
               </th>
-              <th className=" px-6 py-3 text-left text-xs font-medium  text-gray-500 uppercase w-[5%]">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[15%]">
                 Quantité
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  w-[5%]">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[15%]">
                 Prix UHT
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  w-[5%]">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[15%]">
                 Total HT
               </th>
             </tr>
@@ -110,7 +117,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
                       onChange={(e) =>
                         handleChange(index, "quantité", Number(e.target.value))
                       }
-                      className="border-gray-300 text-black w-[50px]"
+                      className="border-gray-300 text-black w-full min-w-[60px]"
                     />
                   </td>
                   <td className="px-6 py-4">
@@ -121,7 +128,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
                       onChange={(e) =>
                         handleChange(index, "prix", Number(e.target.value))
                       }
-                      className="border-gray-300 text-black w-[50px]"
+                      className="border-gray-300 text-black w-full min-w-[60px]"
                     />
                   </td>
                   <td className="px-6 py-4 font-medium text-gray-900 w-[50px]">
@@ -147,7 +154,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
               </React.Fragment>
             ))}
           </tbody>
-          <tfoot className="bg-gray-50">
+          <tfoot className="bg-gray-50 border-t border-black">
             <tr>
               <td
                 colSpan={3}
@@ -159,6 +166,53 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
                 {articles
                   .reduce((sum, item) => sum + item.prix * item.quantité, 0)
                   .toFixed(2)}
+                €
+              </td>
+            </tr>
+            <tr>
+              <td
+                colSpan={2}
+                className="px-6 py-4 text-right font-semibold text-gray-700"
+              >
+                TVA
+              </td>
+              <td className="px-6 py-4">
+                <select
+                  value={tva}
+                  onChange={(e) => setTva(Number(e.target.value))}
+                  className="border-gray-300 text-black"
+                >
+                  <option value={5.5}>5.5%</option>
+                  <option value={10}>10%</option>
+                  <option value={20}>20%</option>
+                </select>
+              </td>
+              <td className="px-6 py-4 font-bold text-gray-900">
+                {(
+                  articles.reduce(
+                    (sum, item) => sum + item.prix * item.quantité,
+                    0
+                  ) *
+                  (tva / 100)
+                ).toFixed(2)}
+                €
+              </td>
+            </tr>
+            <tr>
+              <td
+                colSpan={3}
+                className="px-6 py-4 text-right font-semibold text-gray-700"
+              >
+                Total TTC
+              </td>
+              <td className="px-6 py-4 font-bold text-gray-900">
+                {calculateTTC(
+                  articles.reduce(
+                    (sum, item) => sum + item.prix * item.quantité,
+                    0
+                  ),
+                  tva
+                )}
                 €
               </td>
             </tr>
@@ -175,6 +229,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
         entreprise={entrepriseDetails}
         client={clientDetails}
         articles={articles}
+        tva={tva}
       />
     </div>
   );

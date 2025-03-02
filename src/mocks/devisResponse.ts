@@ -30,3 +30,10 @@ export const mockDevisResponse: Donnée[] = [
       "Assurez-vous de vérifier la puissance des spots pour une bonne répartition de la lumière. Pensez également à protéger le câblage extérieur contre les intempéries.",
   },
 ];
+
+export const mockDevisResponseError: Donnée[] = [
+  {
+    erreur:
+      "Je suis uniquement ici pour générer des devis. Merci de me fournir une demande liée à un devis.",
+  },
+];

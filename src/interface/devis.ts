@@ -18,15 +18,15 @@ export interface Article {
   prix: number;
 }
 
-interface Conseil {
-  conseil: string;
-}
 
-interface Erreur {
-  erreur: string;
+export interface Donnée {
+  article?: string;
+  quantité?: number;
+  prix?: number;
+  description?: string;
+  conseil?: string;
+  erreur?: string;
 }
-
-export type Donnée = Article | Conseil | Erreur;
 
 export interface EntrepriseInfo {
   nom: string;

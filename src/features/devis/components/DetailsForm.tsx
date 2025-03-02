@@ -33,8 +33,8 @@ const DetailsForm = ({
   }, [client, onClientUpdate]);
 
   return (
-    <div className="flex justify-between mb-8 w-[1000px] bg-white rounded-lg p-4">
-      <div className="w-1/2 p-4">
+    <div className="flex flex-col md:flex-row justify-between mb-8  bg-white rounded-lg p-4">
+      <div className="w-full md:w-1/2 p-4">
         <h3 className="font-bold mb-2">Informations de l'entreprise</h3>
         <div className="space-y-2">
           <input
@@ -84,7 +84,7 @@ const DetailsForm = ({
         </div>
       </div>
 
-      <div className="w-1/2 p-4">
+      <div className="w-full md:w-1/2 p-4">
         <h3 className="font-bold mb-2">Informations du client</h3>
         <div className="space-y-2">
           <input
