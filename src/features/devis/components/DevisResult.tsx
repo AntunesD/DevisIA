@@ -15,6 +15,21 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
     )
   );
 
+  const [entrepriseDetails, setEntrepriseDetails] = useState({
+    nom: "",
+    adresse: "",
+    telephone: "",
+    email: "",
+    siret: "",
+  });
+
+  const [clientDetails, setClientDetails] = useState({
+    nom: "",
+    adresse: "",
+    telephone: "",
+    email: "",
+  });
+
   useEffect(() => {
     const newArticles = devis.filter(
       (item): item is Article =>
@@ -39,10 +54,23 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
     );
   };
 
+  const handleDetailsUpdate = (type: "entreprise" | "client", details: any) => {
+    if (type === "entreprise") {
+      setEntrepriseDetails(details);
+    } else {
+      setClientDetails(details);
+    }
+  };
+
   return (
     <div className=" mx-auto p-6 flex flex-col items-center ">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Votre Devis</h2>
-      <DetailsForm />
+      <DetailsForm
+        onEntrepriseUpdate={(details) =>
+          handleDetailsUpdate("entreprise", details)
+        }
+        onClientUpdate={(details) => handleDetailsUpdate("client", details)}
+      />
       <div className=" rounded-lg p-4 bg-white shadow-lg">
         <table className="w-[1000px] table-auto">
           <thead className="bg-gray-50 ">
@@ -143,7 +171,11 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
           <p className="text-black">{conseilItem.conseil}</p>
         </div>
       )}
-      <PdfPreview />
+      <PdfPreview
+        entreprise={entrepriseDetails}
+        client={clientDetails}
+        articles={articles}
+      />
     </div>
   );
 };

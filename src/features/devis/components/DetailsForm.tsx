@@ -1,6 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const DetailsForm = () => {
+interface DetailsFormProps {
+  onEntrepriseUpdate: (details: any) => void;
+  onClientUpdate: (details: any) => void;
+}
+
+const DetailsForm = ({
+  onEntrepriseUpdate,
+  onClientUpdate,
+}: DetailsFormProps) => {
   const [entreprise, setEntreprise] = useState({
     nom: "",
     adresse: "",
@@ -15,6 +23,14 @@ const DetailsForm = () => {
     telephone: "",
     email: "",
   });
+
+  useEffect(() => {
+    onEntrepriseUpdate(entreprise);
+  }, [entreprise, onEntrepriseUpdate]);
+
+  useEffect(() => {
+    onClientUpdate(client);
+  }, [client, onClientUpdate]);
 
   return (
     <div className="flex justify-between mb-8 w-[1000px] bg-white rounded-lg p-4">
