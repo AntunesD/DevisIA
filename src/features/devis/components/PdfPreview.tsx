@@ -1,11 +1,12 @@
 import {
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-  PDFDownloadLink,
+    Document,
+    Page,
+    PDFDownloadLink,
+    StyleSheet,
+    Text,
+    View,
 } from "@react-pdf/renderer";
+import { useEffect } from "react";
 import { Article } from "../../../interface/devis";
 
 interface PdfPreviewProps {
@@ -169,19 +170,31 @@ const MyDocument = ({ entreprise, client, articles, tva }: PdfPreviewProps) => {
 };
 
 // Composant avec un bouton pour télécharger le PDF
-const PdfPreview = ({ entreprise, client, articles, tva }: PdfPreviewProps) => (
-  <div className="mt-6">
-    <PDFDownloadLink
-      document={<MyDocument {...{ entreprise, client, articles, tva }} />}
-      fileName="devis.pdf"
-    >
-      {({ loading }) => (
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          {loading ? "Génération en cours..." : "Télécharger le PDF"}
-        </button>
-      )}
-    </PDFDownloadLink>
-  </div>
-);
+const PdfPreview = ({ entreprise, client, articles, tva }: PdfPreviewProps) => {
+    useEffect(() => {
+      const button = document.getElementById("pdf-download-button");
+      if (button) {
+        button.click();
+      }
+    }, []);
+  
+    return (
+      <div className="mt-6">
+        <PDFDownloadLink
+          document={<MyDocument {...{ entreprise, client, articles, tva }} />}
+          fileName="devis.pdf"
+        >
+          {({ loading }) => (
+            <button
+              id="pdf-download-button"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              {loading ? "Génération en cours..." : "Clicker si le PDF ne s'est pas telecharger"}
+            </button>
+          )}
+        </PDFDownloadLink>
+      </div>
+    );
+  };
 
 export default PdfPreview;

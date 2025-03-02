@@ -17,6 +17,7 @@ export const generateurDevis = async (demande: string): Promise<Donnée[]> => {
                 {
                   text: `Tu es un assistant spécialisé dans la création de devis. 
 Tu dois analyser la demande et générer un **devis sous forme de JSON valide**. 
+N'oublie pas d'inclure la main d'oeuvre et le déplacement dans le devis.
 Si la demande ne concerne pas un devis, répond uniquement avec : 
 \`\`\`json
 { "erreur": "Je suis uniquement ici pour générer des devis. Merci de me fournir une demande liée à un devis." }

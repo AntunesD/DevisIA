@@ -29,7 +29,6 @@ export const DevisPage = () => {
   };
 
   const hasError = devis?.some((item) => "erreur" in item);
-  console.log(hasError);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-10 md:px-4  w-full">
