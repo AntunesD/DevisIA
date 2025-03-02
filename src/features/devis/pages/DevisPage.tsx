@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { generateurDevis } from "../../../api/devisApi";
 import { Donnée } from "../../../types/devis";
 import { DevisForm } from "../components/DevisForm";
 import { DevisResult } from "../components/DevisResult";
+import { mockDevisResponse } from "../../../mocks/devisResponse";
 
 export const DevisPage = () => {
   const [devis, setDevis] = useState<Donnée[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-//   useEffect(() => {
-//     setDevis(mockDevisResponse);
-//   }, []);
+    useEffect(() => {
+      setDevis(mockDevisResponse);
+    }, []);
 
   const handleSubmit = async (demande: string) => {
     setIsLoading(true);
@@ -24,13 +25,20 @@ export const DevisPage = () => {
     }
   };
 
-  console.log(devis);
-
   return (
-    <div className="container">
-      <h1>Générateur de Devis IA</h1>
-      <DevisForm onSubmit={handleSubmit} isLoading={isLoading} />
-      {devis && <DevisResult devis={devis} />}
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-10 px-4 w-full">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">
+        Générateur de Devis IA
+      </h1>
+      {devis ? (
+        <div className="mt-6 w-full">
+          <DevisResult devis={devis} />
+        </div>
+      ) : (
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full">
+        <DevisForm onSubmit={handleSubmit} isLoading={isLoading} />
+      </div>
+       )}
     </div>
   );
 };

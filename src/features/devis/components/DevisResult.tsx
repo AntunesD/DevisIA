@@ -12,7 +12,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
         "article" in item && "quantité" in item && "prix" in item
     )
   );
-//Essai de commentaire
+  
   useEffect(() => {
     const newArticles = devis.filter(
       (item): item is Article =>
@@ -38,22 +38,24 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className=" mx-auto p-6 flex flex-col items-center ">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Votre Devis</h2>
-      <div className="overflow-x-auto shadow-lg rounded-lg">
-        <table className="w-full table-auto">
-          <thead className="bg-gray-50">
+      <div className=" rounded-lg p-4 bg-white shadow-lg">
+        <table className="w-[1000px] table-auto">
+          <thead className="bg-gray-50 ">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2">
+              <th className="px-6 py-3 text-left  text-xs font-medium  text-gray-500 uppercase w-[85%]">
                 Article
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+              <th
+                className=" px-6 py-3 text-left text-xs font-medium  text-gray-500 uppercase w-[5%]"
+              >
                 Quantité
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  w-[5%]">
                 Prix UHT
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  w-[5%]">
                 Total HT
               </th>
             </tr>
@@ -69,7 +71,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
                       onChange={(e) =>
                         handleChange(index, "article", e.target.value)
                       }
-                      className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      className="border-gray-300 text-black   focus:border-blue-500 focus:ring-blue-500"
                     />
                   </td>
                   <td className="px-6 py-4">
@@ -79,7 +81,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
                       onChange={(e) =>
                         handleChange(index, "quantité", Number(e.target.value))
                       }
-                      className="w-32 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      className="border-gray-300 text-black w-[50px]"
                     />
                   </td>
                   <td className="px-6 py-4">
@@ -90,10 +92,10 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
                       onChange={(e) =>
                         handleChange(index, "prix", Number(e.target.value))
                       }
-                      className="w-32 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      className="border-gray-300 text-black w-[50px]"
                     />
                   </td>
-                  <td className="px-6 py-4 font-medium text-gray-900">
+                  <td className="px-6 py-4 font-medium text-gray-900 w-[50px]">
                     {(item.prix * item.quantité).toFixed(2)}€
                   </td>
                 </tr>
@@ -103,7 +105,13 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
                       colSpan={4}
                       className="px-6 py-2 text-sm italic text-gray-500 bg-gray-50"
                     >
-                      {item.description}
+                      <textarea
+                        value={item.description}
+                        onChange={(e) =>
+                          handleChange(index, "description", e.target.value)
+                        }
+                        className="border-gray-300 text-black w-[100%]"
+                      />
                     </td>
                   </tr>
                 )}
@@ -129,9 +137,9 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
         </table>
       </div>
       {conseilItem && (
-        <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-          <h3 className="text-lg font-semibold text-blue-900 mb-2">Conseil</h3>
-          <p className="text-blue-800">{conseilItem.conseil}</p>
+        <div className="mt-8 p-8 bg-green-50 rounded-lg">
+          <h3 className="text-lg font-semibold text-black mb-2">Conseil</h3>
+          <p className="text-black">{conseilItem.conseil}</p>
         </div>
       )}
     </div>
