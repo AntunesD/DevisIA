@@ -28,25 +28,23 @@ export const DevisPage = () => {
     }
   };
 
-  const hasError = devis?.some((item) => "erreur" in item);
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-10 md:px-4  w-full">
       <h1 className="text-3xl font-bold text-gray-800 mb-6">
         Générateur de Devis IA
       </h1>
-      {devis && !hasError ? (
+      {devis && devis.length > 0 && !devis[0].erreur ? (
         <div className="mt-6 w-full">
           <DevisResult devis={devis} />
         </div>
       ) : (
         <>
           <DevisForm onSubmit={handleSubmit} isLoading={isLoading} />
-          {devis && hasError && (
+          {devis && devis.length > 0 && devis[0].erreur ? (
             <div className="mt-4 bg-red-200 p-4 rounded-lg">
-              {devis.find((item) => "erreur" in item)?.erreur}
+              {devis[0].erreur}
             </div>
-          )}
+          ) : null}
         </>
       )}
     </div>
