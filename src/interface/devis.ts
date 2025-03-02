@@ -27,3 +27,18 @@ interface Erreur {
 }
 
 export type Donnée = Article | Conseil | Erreur;
+
+export interface EntrepriseInfo {
+  nom: string;
+  adresse: string;
+  telephone?: string;
+  email?: string;
+  siret?: string;
+}
+
+export interface ClientInfo {
+  nom: string;
+  adresse: string;
+  telephone?: string;
+  email?: string;
+}

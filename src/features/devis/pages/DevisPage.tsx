@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { generateurDevis } from "../../../api/devisApi";
-import { Donnée } from "../../../types/devis";
+import { Donnée } from "../../../interface/devis";
 import { DevisForm } from "../components/DevisForm";
 import { DevisResult } from "../components/DevisResult";
 import { mockDevisResponse } from "../../../mocks/devisResponse";
@@ -9,9 +9,9 @@ export const DevisPage = () => {
   const [devis, setDevis] = useState<Donnée[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-      setDevis(mockDevisResponse);
-    }, []);
+  useEffect(() => {
+    setDevis(mockDevisResponse);
+  }, []);
 
   const handleSubmit = async (demande: string) => {
     setIsLoading(true);
@@ -35,10 +35,10 @@ export const DevisPage = () => {
           <DevisResult devis={devis} />
         </div>
       ) : (
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full">
-        <DevisForm onSubmit={handleSubmit} isLoading={isLoading} />
-      </div>
-       )}
+        <div className="bg-white shadow-lg rounded-lg p-6 w-full">
+          <DevisForm onSubmit={handleSubmit} isLoading={isLoading} />
+        </div>
+      )}
     </div>
   );
 };

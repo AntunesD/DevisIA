@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Donnée, Article } from "../../../types/devis";
+import { Donnée, Article } from "../../../interface/devis";
+import DetailsForm from "./DetailsForm";
+import PdfPreview from "./PdfPreview";
 
 interface DevisResultProps {
   devis: Donnée[];
@@ -12,7 +14,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
         "article" in item && "quantité" in item && "prix" in item
     )
   );
-  
+
   useEffect(() => {
     const newArticles = devis.filter(
       (item): item is Article =>
@@ -40,6 +42,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
   return (
     <div className=" mx-auto p-6 flex flex-col items-center ">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Votre Devis</h2>
+      <DetailsForm />
       <div className=" rounded-lg p-4 bg-white shadow-lg">
         <table className="w-[1000px] table-auto">
           <thead className="bg-gray-50 ">
@@ -47,9 +50,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
               <th className="px-6 py-3 text-left  text-xs font-medium  text-gray-500 uppercase w-[85%]">
                 Article
               </th>
-              <th
-                className=" px-6 py-3 text-left text-xs font-medium  text-gray-500 uppercase w-[5%]"
-              >
+              <th className=" px-6 py-3 text-left text-xs font-medium  text-gray-500 uppercase w-[5%]">
                 Quantité
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  w-[5%]">
@@ -142,6 +143,7 @@ export const DevisResult = ({ devis }: DevisResultProps) => {
           <p className="text-black">{conseilItem.conseil}</p>
         </div>
       )}
+      <PdfPreview />
     </div>
   );
 };
